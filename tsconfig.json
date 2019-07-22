@@ -3,9 +3,11 @@
     "target": "es6",
     "module": "commonjs",
     "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
+    "allowJs": true,
     "typeRoots": [
       "node_modules/@types"
     ],
