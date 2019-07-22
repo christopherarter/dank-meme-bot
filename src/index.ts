@@ -4,7 +4,7 @@ import axios from 'axios';
 const app: any = express();
 
 /**
- * This will be an SNS handler soon.
+ * @TODO remove express and use SNS event.
  */
 app.get('/', async (req: any, res: any) => {
     let dankMeme = await getDankestMeme();
