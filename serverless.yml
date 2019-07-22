@@ -2,7 +2,7 @@
 plugins:
   - serverless-offline
 
-service: arter-typescript-serverless-starter
+service: dank-meme-bot
     
 provider:
   name: aws

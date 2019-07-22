@@ -3,21 +3,12 @@ import serverless from 'serverless-http';
 import axios from 'axios';
 const app: any = express();
 
+/**
+ * This will be an SNS handler soon.
+ */
 app.get('/', async (req: any, res: any) => {
-
     let dankMeme = await getDankestMeme();
     res.send(dankMeme);
-    // let response = await axios.get("https://reddit.com/r/dankmemes.json");
-    // response.data.data.children.forEach((item: any) => {
-    //     if (isDankestMeme(item)) {
-    //         res.send({
-    //             title: item.data.title,
-    //             url: item.data.url,
-    //             user: item.data.author,
-    //             link: 'https://reddit.com' + item.data.permalink
-    //         });
-    //     }
-    // });
 });
 
 /**
@@ -39,6 +30,14 @@ let getDankestMeme = async ( endpoint: string = "https://reddit.com/r/dankmemes.
     }
 
     /**
+     * @TODO add racist / hate speech checks here.
+     */
+    let isTooDank = (item: any): boolean => {
+        // aws rekognition api check here.
+        return false;
+    }
+
+    /**
      * format the return of the meme.
      * @param item dankest meme object
      */
@@ -49,22 +48,8 @@ let getDankestMeme = async ( endpoint: string = "https://reddit.com/r/dankmemes.
             link: 'https://reddit.com' + item.data.permalink
     });
 
-    let response = await axios.get(endpoint);
-    let cleanedMemes = response.data.data.children.filter( (item: any) => {
-        if(item.data.stickied === false &&
-        item.data.is_video === false &&
-        item.data.over_18 === false){
-            return item;
-        }
-    });
-    
-    // let checkedMemes = response.data.data.children.map( (item: any)  => {
-    //     if(isDankestMeme(item)){
-    //         return item;
-    //     }
-    // });
-    // console.log('checked memes', checkedMemes);
-    return formatDankestMeme(cleanedMemes[0]);
+    // get dat bread 
+    return formatDankestMeme( ( await axios.get(endpoint) ).data.data.children.filter( (item: any) => isDankestMeme(item) )[0] );
 }
 
 const handler = serverless(app);
