@@ -15,7 +15,7 @@ app.get('/', async (req: any, res: any) => {
  * Retrieve the dankest
  * meme from /r/dankmemes
  */
-let getDankestMeme = async ( endpoint: string = "https://reddit.com/r/dankmemes.json") : Promise<object> => {
+let getDankestMeme = async (endpoint: string = "https://reddit.com/r/dankmemes.json"): Promise<object> => {
 
     /**
      * Determine if the meme is valid to be published.
@@ -41,15 +41,15 @@ let getDankestMeme = async ( endpoint: string = "https://reddit.com/r/dankmemes.
      * format the return of the meme.
      * @param item dankest meme object
      */
-    let formatDankestMeme = (item: any) :object => ({
-            title: item.data.title,
-            url: item.data.url,
-            user: item.data.author,
-            link: 'https://reddit.com' + item.data.permalink
+    let formatDankestMeme = (item: any): object => ({
+        title: item.data.title,
+        url: item.data.url,
+        user: item.data.author,
+        link: 'https://reddit.com' + item.data.permalink
     });
 
     // get dat bread 
-    return formatDankestMeme( ( await axios.get(endpoint) ).data.data.children.filter( (item: any) => isDankestMeme(item) )[0] );
+    return formatDankestMeme((await axios.get(endpoint)).data.data.children.filter((item: any) => isDankestMeme(item) && !isTooDank(item) )[0]);
 }
 
 const handler = serverless(app);
