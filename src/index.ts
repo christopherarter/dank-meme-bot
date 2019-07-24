@@ -6,7 +6,7 @@ const app: any = express();
 /**
  * @TODO remove express and use SNS
  */
-app.get('/', async (req: any, res: any) => {
+app.use('/', async (req: any, res: any) => {
     let dankMeme = await getDankestMeme();
     res.send(dankMeme);
 });
@@ -37,15 +37,34 @@ let getDankestMeme = async (endpoint: string = "https://reddit.com/r/dankmemes.j
         return false;
     }
 
+    // /**
+    //  * format the return of the meme.
+    //  * @param item dankest meme object
+    //  */
+    // let formatDankestMeme = (item: any): object => ({
+    //     title: item.data.title,
+    //     url: item.data.url,
+    //     user: item.data.author,
+    //     link: 'https://reddit.com' + item.data.permalink
+    // });
+
+
     /**
      * format the return of the meme.
      * @param item dankest meme object
      */
     let formatDankestMeme = (item: any): object => ({
-        title: item.data.title,
-        url: item.data.url,
-        user: item.data.author,
-        link: 'https://reddit.com' + item.data.permalink
+        //text: item.data.title,
+        response_type: 'in_channel',
+        attachments: [
+            {
+               
+                fallback: item.data.title,
+                title: item.data.title,
+                image_url: item.data.url,
+                title_link: 'https://reddit.com' + item.data.permalink
+            }
+        ]
     });
 
     // get dat bread 
