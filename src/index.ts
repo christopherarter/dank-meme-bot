@@ -1,16 +1,19 @@
 import express from 'express';
 import serverless from 'serverless-http';
 import axios from 'axios';
+import slackRouter from './controllers/SlackController';
+
 const app: any = express();
 
 /**
  * @TODO remove express and use SNS
  */
-app.use('/', async (req: any, res: any) => {
-    let dankMeme = await getDankestMeme();
-    res.send(dankMeme);
-});
+// app.use('/', async (req: any, res: any) => {
+//     let dankMeme = await getDankestMeme();
+//     res.send(dankMeme);
+// });
 
+app.use('/', slackRouter);
 /**
  * Retrieve the dankest
  * meme from /r/dankmemes
