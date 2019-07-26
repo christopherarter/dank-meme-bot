@@ -6,11 +6,17 @@ import RedditMutator from '../classes/mutator/RedditMutator';
 const slackRouter = express.Router();
 
 slackRouter.post('/slack', async (req, res) => {
+    
     let collection = new Collection([
         new Reddit("https://reddit.com/r/dankmemes.json"),
         new Reddit("https://reddit.com/r/starterpacks.json"),
     ]);
-    res.send( ( await collection.getMemes() ) );
+
+    let formattedMemes = ( await collection.getMemes() ).map( (item: IMeme) => {
+        return (new RedditMutator()).format(item);
+    });
+
+    res.send( formattedMemes[Math.floor(Math.random()*formattedMemes.length)]);
 })
 
 export default slackRouter;

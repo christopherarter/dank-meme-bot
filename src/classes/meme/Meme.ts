@@ -1,24 +1,35 @@
 class Meme implements IMeme {
 
-    public data: any;
+    /**
+     * Raw data from single meme
+     */
+    protected data: any;
 
-    public setData(data: any){
+    /**
+     * Setter for protected data prop;
+     * @param data any
+     */
+    public setData = (data: any) => {
         this.data = data;
     }
 
-    public getData() : object {
+    /**
+     * Getter for protected data prop.
+     */
+    public getData = () : object => {
         return this.data;
     }
 
-    public format(): object {
-        
-        return {
-                title: this.data.data.title,
-                url: this.data.data.url,
-                user: this.data.data.author,
-                link: 'https://reddit.com' + this.data.data.permalink
-            }
-    }
+    /**
+     * Default format of meme data.
+     * Not sure why I wrote this.s
+     */
+    public format = () : object => ({
+        title: this.data.data.title,
+        url: this.data.data.url,
+        user: this.data.data.author,
+        link: 'https://reddit.com' + this.data.data.permalink
+    })
 
     public constructor( data: any ){
         this.setData(data);
