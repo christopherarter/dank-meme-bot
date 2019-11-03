@@ -7,13 +7,25 @@ service: dank-meme-bot
     
 provider:
   name: aws
-  runtime: nodejs8.10
-  stage: ${env:STAGE}
-  region: ${env:AWS_REGION}
+  runtime: nodejs10.x
+  stage: ${env:DANK_STAGE}
+  region: ${env:DANK_AWS_REGION}
 
 functions:
-  app:
-    handler: dist/index.handler
+
+  sync:
+    handler: dist/index.sync
     events:
-      - http: ANY /
-      - http: 'ANY {proxy+}'
+      - sns: dank-meme-sync
+
+  twitter:
+    handler: dist/index.twitter
+    events:
+      - schedule: rate(3 minutes)
+
+  slack:
+    handler: dist/index.slack
+    events:
+      - http: GET /slack
+
+    
