@@ -28,7 +28,7 @@
     "aws-sdk": "^2.496.0",
     "axios": "^0.19.0",
     "cheerio": "^1.0.0-rc.3",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "puppeteer": "^1.18.1",
     "serverless-http": "^2.0.2",
     "snoowrap": "^1.17.0"
